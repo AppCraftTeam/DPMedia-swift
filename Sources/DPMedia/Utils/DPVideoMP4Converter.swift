@@ -10,7 +10,7 @@ import AVFoundation
 
 public struct DPVideoMP4Converter {
     
-    func convert(_ url: URL, completion: @escaping (Result<URL, Error>) -> Void) {
+    public func convert(_ url: URL, completion: @escaping (Result<URL, Error>) -> Void) {
         let asset = AVURLAsset(url: url, options: nil)
         let fileManager = FileManager.default
         
