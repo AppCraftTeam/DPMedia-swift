@@ -30,7 +30,6 @@ public struct DPMediaMimeType {
     // MARK: - Props
     public let mime: String
     public let fileType: DPMediaFileType
-    
     private let bytesCount: Int
     private let matches: ([UInt8], Creator) -> Bool
 

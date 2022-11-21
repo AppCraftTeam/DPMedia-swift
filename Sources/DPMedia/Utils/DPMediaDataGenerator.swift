@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct DPMediaDataGenerator {
+public struct DPMediaDataGenerator {
     
     // MARK: - Init
     public init(
