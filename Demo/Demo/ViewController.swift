@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import AVKit
+import DPMedia
 
 class ViewController: UIViewController {
     
@@ -13,23 +15,32 @@ class ViewController: UIViewController {
     private lazy var imageView = UIImageView()
     
     private lazy var mediaAdapter: DPMediaAdapterInterface = {
-        let result = DPMediaAdapter(viewController: self)
-        result.didError = { [weak self] error in
-            let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
-            alert.addAction(.init(title: "OK", style: .cancel))
-            self?.present(alert, animated: true)
-        }
-        result.didFinsh = { [weak self] medias in
-            switch medias.first {
-            case .none:
-                break
-            case let .image(image):
-                self?.imageView.image = image.image
-            case let .video(video):
-                self?.imageView.image = video.preview
+        DPMediaAdapter(
+            viewController: self,
+            didFinish: { [weak self] result in
+                switch result {
+                case let .failure(error):
+                    let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+                    alert.addAction(.init(title: "OK", style: .cancel))
+                    self?.present(alert, animated: true)
+                case let .success(medias):
+                    switch medias.first {
+                    case .none:
+                        break
+                    case let .image(image):
+                        self?.imageView.image = image.image
+                    case let .video(video):
+                        self?.imageView.image = video.preview
+                        
+                        let player = AVPlayer(url: video.url)
+                        let vc = AVPlayerViewController()
+                        vc.player = player
+                        self?.present(vc, animated: true)
+                        
+                    }
+                }
             }
-        }
-        return result
+        )
     }()
 
     // MARK: - ViewController

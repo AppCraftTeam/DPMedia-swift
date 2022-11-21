@@ -9,5 +9,5 @@ import Foundation
 import UIKit
 
 public protocol DPMediaImageProcessorFactory {
-    func process(_ image: UIImage) throws -> DPMediaImage
+    func process(_ image: UIImage, completion: @escaping (Result<DPMediaImage, Error>) -> Void)
 }

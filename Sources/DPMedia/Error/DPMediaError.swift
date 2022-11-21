@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DPMediaError {
+public struct DPMediaError: DPMediaErrorProtocol {
     
     // MARK: - Methods
     public init(id: String, message: String) {
@@ -20,34 +20,22 @@ public struct DPMediaError {
     public let message: String
 }
 
-// MARK: - Equatable
-extension DPMediaError: Equatable {
-    
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-}
-
-// MARK: - LocalizedError
-extension DPMediaError: LocalizedError {
-    
-    public var errorDescription: String? {
-        self.message
-    }
-    
-    public var failureReason: String? {
-        self.message
-    }
-    
-}
-
 // MARK: - Store
 public extension DPMediaError {
     
+    static let someError = DPMediaError(
+        id: "someError",
+        message: "Произошла ошибка."
+    )
+    
+    static let cancel = DPMediaError(
+        id: "cancel",
+        message: "Отменено."
+    )
+    
     static let imageTypeNotSupported = DPMediaError(
         id: "imageTypeNotSupported",
-        message: "Формат загруженного изображения не поддерживается."
+        message: "Формат изображения не поддерживается."
     )
     
     static let authorizationStatus = DPMediaError(
@@ -64,5 +52,14 @@ public extension DPMediaError {
         id: "failureImage",
         message: "Не удалось обработать видео."
     )
+    
+    static let fileTypeNotSupported = DPMediaError(
+        id: "videoTypeNotSupported",
+        message: "Формат файла не поддерживается."
+    )
+    
+    static func maxSizeMB(_ value: Double) -> DPMediaError {
+        DPMediaError(id: "failureFile", message: "Максимальный размер файла - \(Int(value)) Мб")
+    }
     
 }

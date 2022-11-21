@@ -16,7 +16,7 @@ public struct DPMediaPicker: DPMediaPickerFactory {
     public init(
         sourceType: UIImagePickerController.SourceType = .photoLibrary,
         allowsEditing: Bool = false,
-        mediaTypes: Set<DPMediaType>? = nil,
+        mediaTypes: Set<UIImagePickerController.MediaType> = [],
         selectionLimit: Int = 1
     ) {
         self.sourceType = sourceType
@@ -28,7 +28,7 @@ public struct DPMediaPicker: DPMediaPickerFactory {
     // MARK: - Props
     public var sourceType: UIImagePickerController.SourceType
     public var allowsEditing: Bool
-    public var mediaTypes: Set<DPMediaType>?
+    public var mediaTypes: Set<UIImagePickerController.MediaType>
     public var selectionLimit: Int
     
     // MARK: - Methods
@@ -51,12 +51,14 @@ public struct DPMediaPicker: DPMediaPickerFactory {
         vc.allowsEditing = self.allowsEditing
         
         if
-            let mediaTypes = self.mediaTypes,
-            !mediaTypes.isEmpty,
+            !self.mediaTypes.isEmpty,
             let availableMediaTypes = UIImagePickerController.availableMediaTypes(for: self.sourceType)
         {
             vc.mediaTypes = availableMediaTypes.filter({ imagePickerMediaType in
-                if let mediaType = DPMediaType(rawValue: imagePickerMediaType), mediaTypes.contains(mediaType) {
+                if
+                    let mediaType = UIImagePickerController.MediaType(rawValue: imagePickerMediaType),
+                    self.mediaTypes.contains(mediaType)
+                {
                     return true
                 } else {
                     return false
@@ -73,15 +75,17 @@ public struct DPMediaPicker: DPMediaPickerFactory {
         configuration.selectionLimit = self.selectionLimit
         configuration.preferredAssetRepresentationMode = .current
         
-        if let mediaTypes = self.mediaTypes {
-            switch mediaTypes {
-            case [.image]:
-                configuration.filter = .images
-            case [.video]:
-                configuration.filter = .videos
-            default:
-                break
+        if !self.mediaTypes.isEmpty {
+            let filters: [PHPickerFilter] = self.mediaTypes.map { type in
+                switch type {
+                case .image:
+                    return .images
+                case .video:
+                    return .videos
+                }
             }
+            
+            configuration.filter = .any(of: filters)
         }
         
         return PHPickerViewController(configuration: configuration)

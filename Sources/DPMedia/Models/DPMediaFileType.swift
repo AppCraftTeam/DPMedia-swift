@@ -1,5 +1,5 @@
 //
-//  DPFileType.swift
+//  DPMediaFileType.swift
 //  Demo
 //
 //  Created by Дмитрий Поляков on 20.11.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum DPFileType {
+public enum DPMediaFileType: String {
   case aac
   case amr
   case ar
@@ -52,7 +52,7 @@ public enum DPFileType {
   case rar
   case rpm
   case rtf
-  case sevenZ
+  case sevenZ = "7z"
   case sqlite
   case swf
   case tar

@@ -17,12 +17,14 @@ open class DPMediaAdapter: NSObject, DPMediaAdapterInterface {
         viewController: UIViewController? = nil,
         picker: DPMediaPickerFactory = DPMediaPicker(),
         videoProcessor: DPMediaVideoProcessorFactory = DPMediaVideoProcessor(),
-        imageProcessor: DPMediaImageProcessorFactory = DPMediaPNGImageProcessor()
+        imageProcessor: DPMediaImageProcessorFactory = DPMediaImagePNGProcessor(),
+        didFinish: ((Result<[DPMedia], Error>) -> Void)? = nil
     ) {
         self.viewController = viewController
         self.picker = picker
         self.imageProcessor = imageProcessor
         self.videoProcessor = videoProcessor
+        self.didFinish = didFinish
     }
     
     // MARK: - Props
@@ -30,15 +32,14 @@ open class DPMediaAdapter: NSObject, DPMediaAdapterInterface {
     open var picker: DPMediaPickerFactory
     open var imageProcessor: DPMediaImageProcessorFactory
     open var videoProcessor: DPMediaVideoProcessorFactory
-    open var didError: ((Error) -> Void)?
-    open var didFinsh: (([DPMedia]) -> Void)?
+    open var didFinish: ((Result<[DPMedia], Error>) -> Void)?
     
     // MARK: - Methods
     open func start() {
         self.requestAuthorization { [weak self] error in
             DispatchQueue.main.async { [weak self] in
                 if let error = error {
-                    self?.didError?(error)
+                    self?.didFinish?(.failure(error))
                 } else {
                     DispatchQueue.main.async { [weak self] in
                         self?.showPicker()
@@ -101,28 +102,34 @@ extension DPMediaAdapter: UIImagePickerControllerDelegate, UINavigationControlle
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
         guard
-            let imagePickerMediaType = info[.mediaType] as? String,
-            let mediaType = DPMediaType(rawValue: imagePickerMediaType)
+            let mediaTypeRawValue = info[.mediaType] as? String,
+            let mediaType = UIImagePickerController.MediaType(rawValue: mediaTypeRawValue)
         else { return }
 
         switch mediaType {
         case .image:
             guard let image = (info[.editedImage] ?? info[.originalImage]) as? UIImage else { return }
             
-            do {
-                let processedImage = try self.imageProcessor.process(image)
-                self.didFinsh?([ .image(processedImage) ])
-            } catch {
-                self.didError?(error)
+            self.imageProcessor.process(image) { [weak self] result in
+                switch result {
+                case let .failure(error):
+                    self?.didFinish?(.failure(error))
+                case let .success(processedImage):
+                    let media = DPMedia.image(processedImage)
+                    self?.didFinish?(.success([media]))
+                }
             }
         case .video:
             guard let url = info[.mediaURL] as? URL else { return }
             
-            do {
-                let processedVideo = try self.videoProcessor.process(url)
-                self.didFinsh?([ .video(processedVideo) ])
-            } catch {
-                self.didError?(error)
+            self.videoProcessor.process(url) { [weak self] result in
+                switch result {
+                case let .failure(error):
+                    self?.didFinish?(.failure(error))
+                case let .success(processedVideo):
+                    let media = DPMedia.video(processedVideo)
+                    self?.didFinish?(.success([media]))
+                }
             }
         }
         
@@ -139,68 +146,82 @@ extension DPMediaAdapter: UIImagePickerControllerDelegate, UINavigationControlle
 extension DPMediaAdapter: PHPickerViewControllerDelegate {
     
     public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        let loadingGroup = DispatchGroup()
+        picker.dismiss(animated: true)
+        
         var medias: [DPMedia] = []
         var errorMain: Error?
         
-        for result in results {
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-                loadingGroup.enter()
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { url, error in
-                    guard let url = url, error == nil else {
-                        errorMain = error
-                        loadingGroup.leave()
-                        return
-                    }
-                    
-                    do {
-                        let processedVideo = try self.videoProcessor.process(url)
-                        medias += [ .video(processedVideo) ]
-                        loadingGroup.leave()
-                    } catch {
-                        errorMain = error
-                        loadingGroup.leave()
-                    }
-                }
-            }
+        let manager = PHImageManager.default()
+        let identifiers = results.compactMap(\.assetIdentifier)
+        let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+        var countMain = fetchResult.count
+        
+        func tryFinish() {
+            countMain -= 1
             
-            else if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                loadingGroup.enter()
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, error in
-                    guard let url = url, error == nil else {
-                        errorMain = error
-                        loadingGroup.leave()
-                        return
-                    }
+            if countMain == 0 {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
                     
-                    do {
-                        let data = try Data(contentsOf: url)
-                        
-                        guard let image = UIImage(data: data) else {
-                            loadingGroup.leave()
-                            return
-                        }
-                        
-                        let processedImage = try self.imageProcessor.process(image)
-                        medias += [ .image(processedImage) ]
-                        loadingGroup.leave()
-                    } catch {
-                        errorMain = error
-                        loadingGroup.leave()
+                    if let error = errorMain {
+                        self.didFinish?(.failure(error))
+                    } else {
+                        self.didFinish?(.success(medias))
                     }
                 }
             }
         }
         
-        loadingGroup.notify(queue: .main) { [weak self] in
-            if let error = errorMain {
-                self?.didError?(error)
-            } else {
-                self?.didFinsh?(medias)
+        fetchResult.enumerateObjects { asset, _, _ in
+            switch asset.mediaType {
+            case .image:
+                manager.requestImage(
+                    for: asset,
+                    targetSize: PHImageManagerMaximumSize,
+                    contentMode: .aspectFill,
+                    options: nil
+                ) { [weak self] image, _ in
+                    guard let self = self, let image = image else {
+                        errorMain = DPMediaError.failureImage
+                        tryFinish()
+                        return
+                    }
+                    
+                    self.imageProcessor.process(image) { result in
+                        switch result {
+                        case let .failure(error):
+                            errorMain = error
+                        case let .success(processedImage):
+                            medias += [ .image(processedImage) ]
+                        }
+                        tryFinish()
+                    }
+                }
+            case .video:
+                manager.requestAVAsset(
+                    forVideo: asset,
+                    options: nil
+                ) { [weak self] avAsset, _, _ in
+                    guard let self = self, let url = (avAsset as? AVURLAsset)?.url else {
+                        errorMain = DPMediaError.failureVideo
+                        tryFinish()
+                        return
+                    }
+                    
+                    self.videoProcessor.process(url) { result in
+                        switch result {
+                        case let .failure(error):
+                            errorMain = error
+                        case let .success(processedVideo):
+                            medias += [ .video(processedVideo) ]
+                        }
+                        tryFinish()
+                    }
+                }
+            default:
+                tryFinish()
             }
         }
-        
-        picker.dismiss(animated: true)
     }
     
 }

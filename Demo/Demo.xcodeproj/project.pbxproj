@@ -12,22 +12,6 @@
 		E244F049292A73FA00D090B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E244F048292A73FA00D090B2 /* Assets.xcassets */; };
 		E244F04C292A73FA00D090B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E244F04A292A73FA00D090B2 /* LaunchScreen.storyboard */; };
 		E2577781292A76B600B7C633 /* DPMedia in Frameworks */ = {isa = PBXBuildFile; productRef = E2577780292A76B600B7C633 /* DPMedia */; };
-		E2577783292A772300B7C633 /* DPMediaPickerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2577782292A772300B7C633 /* DPMediaPickerFactory.swift */; };
-		E2577786292A77F100B7C633 /* DPMediaPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2577785292A77F000B7C633 /* DPMediaPicker.swift */; };
-		E257778C292A782C00B7C633 /* DPMediaAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E257778B292A782C00B7C633 /* DPMediaAdapter.swift */; };
-		E257778E292A7BF600B7C633 /* DPMediaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E257778D292A7BF600B7C633 /* DPMediaError.swift */; };
-		E2577790292A7D2D00B7C633 /* DPMediaAdapterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = E257778F292A7D2D00B7C633 /* DPMediaAdapterInterface.swift */; };
-		E2577792292A7D3D00B7C633 /* DPMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2577791292A7D3D00B7C633 /* DPMedia.swift */; };
-		E2577794292A7D4900B7C633 /* DPMediaVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2577793292A7D4900B7C633 /* DPMediaVideo.swift */; };
-		E2577796292A7D5500B7C633 /* DPMediaImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2577795292A7D5500B7C633 /* DPMediaImage.swift */; };
-		E2577798292A7ED200B7C633 /* DPMediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2577797292A7ED200B7C633 /* DPMediaType.swift */; };
-		E25777A1292A853600B7C633 /* DPMediaImageProcessorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25777A0292A853600B7C633 /* DPMediaImageProcessorFactory.swift */; };
-		E25777A3292A857400B7C633 /* DPMediaVideoProcessorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25777A2292A857400B7C633 /* DPMediaVideoProcessorFactory.swift */; };
-		E25777A5292A862200B7C633 /* DPMediaPNGImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25777A4292A862200B7C633 /* DPMediaPNGImageProcessor.swift */; };
-		E25777AB292A94CB00B7C633 /* DPMediaVideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25777AA292A94CB00B7C633 /* DPMediaVideoProcessor.swift */; };
-		E25777AD292A968300B7C633 /* DPMimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25777AC292A968300B7C633 /* DPMimeType.swift */; };
-		E25777AF292A96F600B7C633 /* DPFileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25777AE292A96F600B7C633 /* DPFileType.swift */; };
-		E25777B9292ABE1400B7C633 /* DPMediaPickerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25777B8292ABE1400B7C633 /* DPMediaPickerInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,22 +22,6 @@
 		E244F04B292A73FA00D090B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E244F04D292A73FA00D090B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E257777E292A767E00B7C633 /* DPMedia-swift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "DPMedia-swift"; path = ..; sourceTree = "<group>"; };
-		E2577782292A772300B7C633 /* DPMediaPickerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaPickerFactory.swift; sourceTree = "<group>"; };
-		E2577785292A77F000B7C633 /* DPMediaPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaPicker.swift; sourceTree = "<group>"; };
-		E257778B292A782C00B7C633 /* DPMediaAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaAdapter.swift; sourceTree = "<group>"; };
-		E257778D292A7BF600B7C633 /* DPMediaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaError.swift; sourceTree = "<group>"; };
-		E257778F292A7D2D00B7C633 /* DPMediaAdapterInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaAdapterInterface.swift; sourceTree = "<group>"; };
-		E2577791292A7D3D00B7C633 /* DPMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMedia.swift; sourceTree = "<group>"; };
-		E2577793292A7D4900B7C633 /* DPMediaVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaVideo.swift; sourceTree = "<group>"; };
-		E2577795292A7D5500B7C633 /* DPMediaImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaImage.swift; sourceTree = "<group>"; };
-		E2577797292A7ED200B7C633 /* DPMediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaType.swift; sourceTree = "<group>"; };
-		E25777A0292A853600B7C633 /* DPMediaImageProcessorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaImageProcessorFactory.swift; sourceTree = "<group>"; };
-		E25777A2292A857400B7C633 /* DPMediaVideoProcessorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaVideoProcessorFactory.swift; sourceTree = "<group>"; };
-		E25777A4292A862200B7C633 /* DPMediaPNGImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaPNGImageProcessor.swift; sourceTree = "<group>"; };
-		E25777AA292A94CB00B7C633 /* DPMediaVideoProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaVideoProcessor.swift; sourceTree = "<group>"; };
-		E25777AC292A968300B7C633 /* DPMimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMimeType.swift; sourceTree = "<group>"; };
-		E25777AE292A96F600B7C633 /* DPFileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPFileType.swift; sourceTree = "<group>"; };
-		E25777B8292ABE1400B7C633 /* DPMediaPickerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMediaPickerInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +62,6 @@
 				E244F043292A73F800D090B2 /* ViewController.swift */,
 				E244F048292A73FA00D090B2 /* Assets.xcassets */,
 				E244F04A292A73FA00D090B2 /* LaunchScreen.storyboard */,
-				E2577784292A77E900B7C633 /* lib */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -112,77 +79,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E2577784292A77E900B7C633 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				E25777B7292ABDD000B7C633 /* Extensions */,
-				E257779C292A81E700B7C633 /* Adapter */,
-				E25777B0292A971A00B7C633 /* File */,
-				E257779A292A810200B7C633 /* Models */,
-				E2577799292A7F1B00B7C633 /* Picker */,
-				E257779D292A84E900B7C633 /* Processor */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		E2577799292A7F1B00B7C633 /* Picker */ = {
-			isa = PBXGroup;
-			children = (
-				E2577782292A772300B7C633 /* DPMediaPickerFactory.swift */,
-				E2577785292A77F000B7C633 /* DPMediaPicker.swift */,
-				E25777B8292ABE1400B7C633 /* DPMediaPickerInterface.swift */,
-			);
-			path = Picker;
-			sourceTree = "<group>";
-		};
-		E257779A292A810200B7C633 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E2577791292A7D3D00B7C633 /* DPMedia.swift */,
-				E257778D292A7BF600B7C633 /* DPMediaError.swift */,
-				E2577795292A7D5500B7C633 /* DPMediaImage.swift */,
-				E2577797292A7ED200B7C633 /* DPMediaType.swift */,
-				E2577793292A7D4900B7C633 /* DPMediaVideo.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		E257779C292A81E700B7C633 /* Adapter */ = {
-			isa = PBXGroup;
-			children = (
-				E257778B292A782C00B7C633 /* DPMediaAdapter.swift */,
-				E257778F292A7D2D00B7C633 /* DPMediaAdapterInterface.swift */,
-			);
-			path = Adapter;
-			sourceTree = "<group>";
-		};
-		E257779D292A84E900B7C633 /* Processor */ = {
-			isa = PBXGroup;
-			children = (
-				E25777A0292A853600B7C633 /* DPMediaImageProcessorFactory.swift */,
-				E25777A2292A857400B7C633 /* DPMediaVideoProcessorFactory.swift */,
-				E25777A4292A862200B7C633 /* DPMediaPNGImageProcessor.swift */,
-				E25777AA292A94CB00B7C633 /* DPMediaVideoProcessor.swift */,
-			);
-			path = Processor;
-			sourceTree = "<group>";
-		};
-		E25777B0292A971A00B7C633 /* File */ = {
-			isa = PBXGroup;
-			children = (
-				E25777AE292A96F600B7C633 /* DPFileType.swift */,
-				E25777AC292A968300B7C633 /* DPMimeType.swift */,
-			);
-			path = File;
-			sourceTree = "<group>";
-		};
-		E25777B7292ABDD000B7C633 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,22 +154,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2577786292A77F100B7C633 /* DPMediaPicker.swift in Sources */,
-				E25777AB292A94CB00B7C633 /* DPMediaVideoProcessor.swift in Sources */,
-				E25777AD292A968300B7C633 /* DPMimeType.swift in Sources */,
-				E25777A5292A862200B7C633 /* DPMediaPNGImageProcessor.swift in Sources */,
-				E25777A1292A853600B7C633 /* DPMediaImageProcessorFactory.swift in Sources */,
-				E25777A3292A857400B7C633 /* DPMediaVideoProcessorFactory.swift in Sources */,
-				E25777B9292ABE1400B7C633 /* DPMediaPickerInterface.swift in Sources */,
-				E2577792292A7D3D00B7C633 /* DPMedia.swift in Sources */,
-				E2577783292A772300B7C633 /* DPMediaPickerFactory.swift in Sources */,
-				E25777AF292A96F600B7C633 /* DPFileType.swift in Sources */,
-				E2577796292A7D5500B7C633 /* DPMediaImage.swift in Sources */,
-				E257778E292A7BF600B7C633 /* DPMediaError.swift in Sources */,
-				E2577798292A7ED200B7C633 /* DPMediaType.swift in Sources */,
-				E2577794292A7D4900B7C633 /* DPMediaVideo.swift in Sources */,
-				E2577790292A7D2D00B7C633 /* DPMediaAdapterInterface.swift in Sources */,
-				E257778C292A782C00B7C633 /* DPMediaAdapter.swift in Sources */,
 				E244F044292A73F800D090B2 /* ViewController.swift in Sources */,
 				E244F040292A73F800D090B2 /* AppDelegate.swift in Sources */,
 			);

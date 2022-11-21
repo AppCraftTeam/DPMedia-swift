@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol DPMediaVideoProcessorFactory {
-    func process(_ url: URL) throws -> DPMediaVideo
+    func process(_ url: URL, completion: @escaping (Result<DPMediaVideo, Error>) -> Void)
 }
