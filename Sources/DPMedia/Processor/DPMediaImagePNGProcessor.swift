@@ -30,8 +30,8 @@ public struct DPMediaImagePNGProcessor: DPMediaImageProcessorFactory {
                 throw DPMediaError.failureImage
             }
             
-            try DPMediaMaxSizeChecker().check(data, maxSizeMB: self.maxSizeMB)
-            try DPMediaFileTypeChecker().check(data, allowsFileTypes: self.allowsFileTypes)
+            try DPMediaMaxSizeChecker(maxSizeMB: self.maxSizeMB).checkData(data)
+            try DPMediaFileTypeChecker(allowsFileTypes: self.allowsFileTypes).checkData(data)
             
             let successVideoImage = DPMediaImage(
                 fileName: UUID().uuidString,
