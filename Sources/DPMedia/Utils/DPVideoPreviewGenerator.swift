@@ -11,6 +11,10 @@ import UIKit
 
 public struct DPVideoPreviewGenerator {
     
+    // MARK: - Init
+    public init() {}
+    
+    // MARK: - Props
     public func generate(from url: URL) throws -> UIImage {
         let asset = AVURLAsset(url: url, options: nil)
         
