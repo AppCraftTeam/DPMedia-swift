@@ -26,10 +26,9 @@ public struct DPMediaVideoProcessor: DPMediaVideoProcessorFactory {
     // MARK: - Methods
     public func process(_ url: URL, completion: @escaping (Result<DPMediaVideo, Error>) -> Void) {
         do {
-            let data = try DPMediaDataGenerator(
-                maxSizeMB: self.maxSizeMB,
-                allowsFileTypes: self.allowsFileTypes
-            ).generate(url)
+            let data = try Data(contentsOf: url)
+            try DPMediaMaxSizeChecker().check(data, maxSizeMB: self.maxSizeMB)
+            try DPMediaFileTypeChecker().check(data, allowsFileTypes: self.allowsFileTypes)
             
             let preview = try DPVideoPreviewGenerator().generate(from: url)
             let fileName = url.lastPathComponent
