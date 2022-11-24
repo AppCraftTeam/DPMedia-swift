@@ -175,12 +175,17 @@ extension DPMediaAdapter: PHPickerViewControllerDelegate {
         fetchResult.enumerateObjects { asset, _, _ in
             switch asset.mediaType {
             case .image:
+                let options = PHImageRequestOptions()
+                options.deliveryMode = .highQualityFormat
+                
                 manager.requestImage(
                     for: asset,
                     targetSize: PHImageManagerMaximumSize,
                     contentMode: .aspectFill,
-                    options: nil
-                ) { [weak self] image, _ in
+                    options: options
+                ) { [weak self] image, info in
+                    guard let isDegraded = info?[PHImageResultIsDegradedKey] as? Bool, !isDegraded else { return }
+                    
                     guard let self = self, let image = image else {
                         errorMain = DPMediaError.failureImage
                         tryFinish()
